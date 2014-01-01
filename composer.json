@@ -1,6 +1,7 @@
 {
     "name": "kaalpurush/sms",
     "description": "SMS libraries for sending sms through Bangladeshi GSM Operators",
+	"license": "MIT",
     "authors": [
         {
             "name": "kaalpurush",
