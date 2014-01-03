@@ -1,7 +1,5 @@
 <?php namespace Kaalpurush\SMS;
 
-include 'config.php';
-
 abstract class SMS{
 
 	var $from='';

@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '../vendor/autoload.php';
+require_once 'config.php';
 use Kaalpurush\SMS\AirtelSMS;
 
 if($_FILES){
@@ -10,7 +11,7 @@ if($_FILES){
 	die('Successfully queued: '.$count);
 }
 
-$sms= new AirtelSMS();
+$sms= new AirtelSMS(AIRTEL_KEY,AIRTEL_SECRET);
 $sms->setFrom('E.HAQUE');
 $msgdata['to'] = '01673911244';
 $msgdata['msg']   = 'howar you?';
