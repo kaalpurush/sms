@@ -1,0 +1,4 @@
+<?php
+
+DEFINE("AIRTEL_KEY","");
+DEFINE("AIRTEL_SECRET","");

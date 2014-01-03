@@ -14,12 +14,37 @@ abstract class SMS{
 		$this->from=$from;
 	}
     
-    function registerSMS($provider,$msg)
+    function registerSMS($msg)
     {
         return $msg['to'];
     } 
 
 	abstract function sendSMS($msgdata);
+	
+	function sendSMSFromCSV($csvfile)
+    {
+		$count=0;
+		if ((!empty($csvfile) && $handle = fopen($csvfile, "r")) !== FALSE) {
+			
+			while (($data = fgetcsv($handle, 1024, ",")) !== FALSE) {
+			
+				$workload['msgdata']['from'] = $this->from;
+				$workload['msgdata']['to'] = $data[0];
+				$workload['msgdata']['msg'] = $data[1];	
+				$workload['provider']=get_class($this);
+				$workload['api_key']=$this->api_key;
+				$workload['api_secret']=$this->api_secret;
+				$client = new GearmanClient();
+				$client->addServer();
+				$result = $client->doBackground("sendSMS", json_encode($workload));
+				if($result) $count++;
+				
+			}
+			fclose($handle);
+			 
+		}
+		return $count;
+	}
 
 	function changeStatus($reg_id,$status)
     {

@@ -4,8 +4,6 @@ class AirtelSMS extends SMS{
 
 	private $api_key;
 	private $api_secret;
-	 
-	const PROVIDER='airtel';
 
 	function __construct($api_key,$api_secret) 
 	{
@@ -15,8 +13,8 @@ class AirtelSMS extends SMS{
 	}
     
     function sendSMS($msgdata)
-    {		
-		$reg_id=parent::registerSMS(self::PROVIDER,$msgdata);
+    {
+		$reg_id=parent::registerSMS($msgdata);
 		
 		$api  = 'http://portals.bd.airtel.com/msdpapi?REQUESTTYPE=SMSSubmitReq&USERNAME='.$this->api_key.'&PASSWORD='.$this->api_secret.'&MOBILENO=';
 		$api .= $msgdata['to'].'&MESSAGE='.urlencode($msgdata['msg']);
@@ -30,31 +28,6 @@ class AirtelSMS extends SMS{
 			
 		parent::changeStatus($reg_id,$status);
 		return $status;
-	}
-	
-	function sendSMSFromCSV($csvfile)
-    {
-		$count=0;
-		if ((!empty($csvfile) && $handle = fopen($csvfile, "r")) !== FALSE) {
-			
-			while (($data = fgetcsv($handle, 1024, ",")) !== FALSE) {
-			
-				$msgdata['from'] = $this->from;
-				$msgdata['to'] = $data[0];
-				$msgdata['msg']   = $data[1];				
-				
-				//$this->sendSMS($msgdata);
-				
-				$client = new GearmanClient();
-				$client->addServer();
-				$result = $client->doBackground("sendSMS", json_encode($msgdata));
-				if($result) $count++;
-				
-			}
-			fclose($handle);
-			 
-		}
-		return $count;
 	}
 
 }
