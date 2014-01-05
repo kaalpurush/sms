@@ -9,7 +9,7 @@ $worker->addFunction("sendSMS", function(GearmanJob $job) {
 	$provider=$workload['provider'];
 	$api_key=$workload['api_key'];
 	$api_secret=$workload['api_secret'];
-	$sms= new Kaalpurush\\SMS\\$provider($api_key,$api_secret);
+	$sms= new Kaalpurush\SMS\{$provider}($api_key,$api_secret);
 	$sms->setFrom('E.HAQUE');
 	$sms->sendSMS($workload['msgdata']);
 });
