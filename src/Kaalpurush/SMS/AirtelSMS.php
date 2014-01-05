@@ -31,5 +31,3 @@ class AirtelSMS extends SMS{
 	}
 
 }
-
-?>

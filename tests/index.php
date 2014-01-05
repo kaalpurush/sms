@@ -1,3 +1,2 @@
 <?php
-echo 'hi';
-?>
+echo 'Kaalpurush\SMS test';
