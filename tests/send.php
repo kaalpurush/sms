@@ -16,6 +16,12 @@ $sms->setFrom('E.HAQUE');
 $msgdata['to'] = '01673911244';
 $msgdata['msg']   = 'howar you?';
 echo $sms->sendSMS($msgdata);
+
+$sms= new SynergySMS(SYNERGY_KEY,SYNERGY_SECRET);
+$sms->setFrom('E.HAQUE');
+$msgdata['to'] = '01673911244';
+$msgdata['msg']   = 'howar you?';
+echo $sms->sendSMS($msgdata);
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">

@@ -9,7 +9,7 @@ class AirtelSMS extends SMS{
 	{
 		parent::__construct();
         $this->api_key=$api_key;
-		$this->api_key=$api_key;
+		$this->api_secret=$api_secret;
 	}
     
     function sendSMS($msgdata)
