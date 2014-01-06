@@ -2,9 +2,9 @@
 
 abstract class SMS{
 
-	private $from='';
-	private $debug=false;
-	private $extra=null;
+	protected $from='';
+	protected $debug=false;
+	protected $extra=null;
 	
 	function __construct() 
 	{
