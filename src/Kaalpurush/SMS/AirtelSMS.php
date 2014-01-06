@@ -21,6 +21,8 @@ class AirtelSMS extends SMS{
 		$api .= '&TYPE=0&ORIGIN_ADDR='.urlencode(isset($msgdata['from'])?$msgdata['from']:$this->from);
 		$response = file_get_contents($api);
 		
+		if($this->debug) echo 'DEBUG:['.$response.']';
+		
 		if(preg_match('/Accepted/',$response))
 			$status=1;
 		else

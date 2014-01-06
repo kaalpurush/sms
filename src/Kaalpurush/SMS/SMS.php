@@ -2,12 +2,18 @@
 
 abstract class SMS{
 
-	var $from='';
-	var $debug=false;
+	private $from='';
+	private $debug=false;
+	private $extra=null;
 	
 	function __construct() 
 	{
         //parent::__construct();
+	}
+	
+	function setExtra($extra)
+	{
+		$this->extra=$extra;
 	}
 	
 	function setDebug($bool)
@@ -40,6 +46,7 @@ abstract class SMS{
 				$workload['provider']=get_class($this);
 				$workload['api_key']=$this->api_key;
 				$workload['api_secret']=$this->api_secret;
+				if($this->$extra!=null) $workload['extra']=$this->$extra;
 				$client = new GearmanClient();
 				$client->addServer();
 				$result = $client->doBackground("sendSMS", json_encode($workload));
