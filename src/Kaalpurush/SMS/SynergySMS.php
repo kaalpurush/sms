@@ -27,6 +27,8 @@ class SynergySMS extends SMS{
 		$response  = curl_exec($ch); 
 		curl_close($ch);
 		
+		if($this->debug) echo 'DEBUG:['.$response.']';
+		
 		if(preg_match('/true/',$response))
 			$status=1;
 		else

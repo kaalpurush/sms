@@ -3,10 +3,16 @@
 abstract class SMS{
 
 	var $from='';
+	var $debug=false;
 	
 	function __construct() 
 	{
         //parent::__construct();
+	}
+	
+	function setDebug($bool)
+	{
+		$this->debug=$bool;
 	}
 	
 	function setFrom($from)
