@@ -2,9 +2,6 @@
 
 class SynergySMS extends SMS{
 
-	private $api_key;
-	private $api_secret;
-
 	function __construct($api_key,$api_secret) 
 	{
 		parent::__construct();

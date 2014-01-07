@@ -2,6 +2,9 @@
 
 abstract class SMS{
 
+	protected $api_key;
+	protected $api_secret;
+
 	protected $from='';
 	protected $debug=false;
 	protected $extra=null;
