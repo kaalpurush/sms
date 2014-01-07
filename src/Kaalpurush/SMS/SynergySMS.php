@@ -21,14 +21,14 @@ class SynergySMS extends SMS{
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data); 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
 		curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1); 
-		$response  = curl_exec($ch); 
+		$response = curl_exec($ch); 
 		curl_close($ch);
 		
 		if($this->debug) echo 'DEBUG:['.$response.']';
 		
-		$response=json_decode($response);
+		$result=json_decode($response);
 		
-		if($response->return=='true')
+		if($result->return=='true')
 			$status=1;
 		else
 			$status=0;

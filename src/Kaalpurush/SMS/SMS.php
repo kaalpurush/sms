@@ -49,8 +49,8 @@ abstract class SMS{
 		if($this->extra!=null) $workload['extra']=$this->extra;
 		$client = new \GearmanClient();
 		$client->addServer();
-		$result = $client->doBackground("sendSMS", json_encode($workload));
-		return $result;
+		$job_handle = $client->doBackground("sendSMS", json_encode($workload));
+		return $job_handle;
 	}
 	
 	function sendSMSFromCSV($csvfile)
@@ -61,8 +61,8 @@ abstract class SMS{
 			while (($data = fgetcsv($handle, 1024, ",")) !== FALSE) {
 				$msgdata['to'] = $data[0];
 				$msgdata['msg'] = $data[1];			
-				$result=$this->queueSMS($msgdata);
-				if($result) $count++;				
+				$job_handle=$this->queueSMS($msgdata);
+				if($job_handle) $count++;				
 			}
 			fclose($handle);
 			 
