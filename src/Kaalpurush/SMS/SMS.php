@@ -33,25 +33,33 @@ abstract class SMS{
 
 	abstract function sendSMS($msgdata);
 	
+	function queueSMS($msgdata)
+    {
+		if(isset($msgdata['from']))
+			$this->from=$msgdata['from'];		
+		$workload['msgdata']['from'] = $this->from;
+		$workload['msgdata']['to'] = $msgdata['to'];
+		$workload['msgdata']['msg'] = $msgdata['msg'];
+		$workload['provider']=get_class($this);
+		$workload['api_key']=$this->api_key;
+		$workload['api_secret']=$this->api_secret;
+		if($this->extra!=null) $workload['extra']=$this->extra;
+		$client = new GearmanClient();
+		$client->addServer();
+		$result = $client->doBackground("sendSMS", json_encode($workload));
+		return $result;
+	}
+	
 	function sendSMSFromCSV($csvfile)
     {
 		$count=0;
 		if ((!empty($csvfile) && $handle = fopen($csvfile, "r")) !== FALSE) {
 			
 			while (($data = fgetcsv($handle, 1024, ",")) !== FALSE) {
-			
-				$workload['msgdata']['from'] = $this->from;
-				$workload['msgdata']['to'] = $data[0];
-				$workload['msgdata']['msg'] = $data[1];	
-				$workload['provider']=get_class($this);
-				$workload['api_key']=$this->api_key;
-				$workload['api_secret']=$this->api_secret;
-				if($this->extra!=null) $workload['extra']=$this->extra;
-				$client = new GearmanClient();
-				$client->addServer();
-				$result = $client->doBackground("sendSMS", json_encode($workload));
-				if($result) $count++;
-				
+				$msgdata['to'] = $data[0];
+				$msgdata['msg'] = $data[1];			
+				$result=$this->queueSMS($msgdata);
+				if($result) $count++;				
 			}
 			fclose($handle);
 			 

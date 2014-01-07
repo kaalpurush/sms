@@ -11,7 +11,6 @@ $worker->addFunction("sendSMS", function(GearmanJob $job) {
 	$api_secret=$workload['api_secret'];
 	$class="Kaalpurush\SMS\$provider";
 	$sms=new $class($api_key,$api_secret);
-	$sms->setFrom('E.HAQUE');
 	$sms->sendSMS($workload['msgdata']);
 });
 

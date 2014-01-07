@@ -29,7 +29,9 @@ class SynergySMS extends SMS{
 		
 		if($this->debug) echo 'DEBUG:['.$response.']';
 		
-		if(preg_match('/true/',$response))
+		$response=json_decode($response);
+		
+		if($response->return=='true')
 			$status=1;
 		else
 			$status=0;
